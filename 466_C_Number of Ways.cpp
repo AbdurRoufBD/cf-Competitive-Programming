@@ -33,7 +33,7 @@ int main()
     }
 
     //--------------------insert first row of dynamic programming
-    sum[0][0] = {0,arr[0]};
+    sum[0][0] = {99999,arr[0]};
     for(intt k = 1; k < n ; k++)
     {
         sum[0][k] = {0,sum[0][k-1].second + arr[k]};
@@ -49,9 +49,10 @@ int main()
             if(i == 0 && j == 0 ) continue;
 
             if(i == j)
-                {//sum[i][j] = {sum[0][i-1].second ,arr[j]};
-                    continue;
-                }
+            {
+                sum[i][j] = {sum[0][i-1].second , arr[j]};
+                //continue;
+            }
             else
             {
                 temp1 = sum[0][i-1].second;
@@ -59,11 +60,13 @@ int main()
 
                 sum[i][j] = {temp1,temp2};
             }
-
-            if(temp1 == temp2 && temp2 == (totalsum - temp1 - temp2)) cnt++;
+            cout<<"("<<sum[i][j].first<<","<<sum[i][j].second<<")\t";
+            if(sum[i][j].first == sum[i][j].second && sum[i][j].second == (totalsum - sum[i][j].first - sum[i][j].second)) cnt++;
 
         }
+        cout<<endl;
     }
+    cout<<totalsum<<endl;
 
     cout<<cnt;
 
